@@ -22,8 +22,6 @@
 		C973D66F18FE676C0036D2B2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C973D66718FE676C0036D2B2 /* InfoPlist.strings */; };
 		C973D67018FE676C0036D2B2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C973D66918FE676C0036D2B2 /* Images.xcassets */; };
 		C973D67118FE676C0036D2B2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C973D66A18FE676C0036D2B2 /* main.m */; };
-		C973D67918FE71A30036D2B2 /* TopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C973D67818FE71A30036D2B2 /* TopViewController.m */; };
-		C973D67C18FE71AD0036D2B2 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C973D67B18FE71AD0036D2B2 /* RootViewController.m */; };
 		C973D67E18FE71C20036D2B2 /* car@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C973D67D18FE71C20036D2B2 /* car@2x.jpg */; };
 		C9FF2EA218FFAD2D00BC8EDE /* CLParallaxView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FF2E9F18FFAD2D00BC8EDE /* CLParallaxView.m */; };
 		C9FF2EA318FFAD2D00BC8EDE /* CLParallaxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FF2EA118FFAD2D00BC8EDE /* CLParallaxViewController.m */; };
@@ -59,10 +57,6 @@
 		C973D66818FE676C0036D2B2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C973D66918FE676C0036D2B2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C973D66A18FE676C0036D2B2 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		C973D67718FE71A30036D2B2 /* TopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopViewController.h; sourceTree = "<group>"; };
-		C973D67818FE71A30036D2B2 /* TopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopViewController.m; sourceTree = "<group>"; };
-		C973D67A18FE71AD0036D2B2 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		C973D67B18FE71AD0036D2B2 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		C973D67D18FE71C20036D2B2 /* car@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "car@2x.jpg"; sourceTree = "<group>"; };
 		C9FF2E9E18FFAD2D00BC8EDE /* CLParallaxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLParallaxView.h; sourceTree = "<group>"; };
 		C9FF2E9F18FFAD2D00BC8EDE /* CLParallaxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLParallaxView.m; sourceTree = "<group>"; };
@@ -154,10 +148,6 @@
 				C973D66418FE676C0036D2B2 /* CLParallaxViewController-Prefix.pch */,
 				C973D66518FE676C0036D2B2 /* CLViewController.h */,
 				C973D66618FE676C0036D2B2 /* CLViewController.m */,
-				C973D67718FE71A30036D2B2 /* TopViewController.h */,
-				C973D67818FE71A30036D2B2 /* TopViewController.m */,
-				C973D67A18FE71AD0036D2B2 /* RootViewController.h */,
-				C973D67B18FE71AD0036D2B2 /* RootViewController.m */,
 				C973D66718FE676C0036D2B2 /* InfoPlist.strings */,
 				C973D66918FE676C0036D2B2 /* Images.xcassets */,
 				C973D66A18FE676C0036D2B2 /* main.m */,
@@ -277,8 +267,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9FF2EA218FFAD2D00BC8EDE /* CLParallaxView.m in Sources */,
-				C973D67918FE71A30036D2B2 /* TopViewController.m in Sources */,
-				C973D67C18FE71AD0036D2B2 /* RootViewController.m in Sources */,
 				C9FF2EA318FFAD2D00BC8EDE /* CLParallaxViewController.m in Sources */,
 				C973D66C18FE676C0036D2B2 /* CLAppDelegate.m in Sources */,
 				C973D67118FE676C0036D2B2 /* main.m in Sources */,
