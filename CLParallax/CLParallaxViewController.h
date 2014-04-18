@@ -8,14 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CLParallaxViewController : UIViewController 
+@interface CLParallaxViewController : UIViewController
 
-@property (nonatomic, strong) UIViewController      *parallaxContentController;
-@property (nonatomic, strong) UITableViewController *rootController;
-@property (nonatomic, assign) CGFloat               parallaxHeight;
+@property (nonatomic, strong) UIView        *parallaxContentView;
+@property (nonatomic, strong) UIScrollView  *rootView;
+@property (nonatomic, assign) CGFloat       parallaxHeight;
 
-- (void)configWithParallaxContentController:(UIViewController *)parallaxContentController
-                             rootController:(UITableViewController *)rootController
-                             parallaxHeight:(CGFloat)parallaxHeight;
-
+- (void)configWithParallaxContentView:(UIView *)parallaxContentView
+                             rootView:(UIScrollView *)rootView
+                       parallaxHeight:(CGFloat)parallaxHeight;
 @end

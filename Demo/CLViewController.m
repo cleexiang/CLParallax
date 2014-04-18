@@ -31,19 +31,11 @@
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero];
     tableView.dataSource = self;
     
-    CLParallaxView *parallaxView = [[CLParallaxView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:parallaxView];
-    [parallaxView configWithParallaxContentView:imageView rootView:tableView parallaxHeight:200];
-    
-    
-    /*
-    TopViewController *top = [[TopViewController alloc] init];
-    RootViewController *root = [[RootViewController alloc] init];
+//    CLParallaxView *parallaxView = [[CLParallaxView alloc] initWithFrame:self.view.bounds];
+//    [self.view addSubview:parallaxView];
+//    [parallaxView configWithParallaxContentView:imageView rootView:tableView parallaxHeight:200];
 
-    CLParallaxViewController *parallaxController = [[CLParallaxViewController alloc]
-                                                    initWithParallaxController:top
-                                                    rootController:root
-                                                    parallaxHeight:200];
+    CLParallaxViewController *parallaxController = [[CLParallaxViewController alloc] init];
     [parallaxController willMoveToParentViewController:self];
     
     [self addChildViewController:parallaxController];
@@ -51,8 +43,8 @@
     [self.view addSubview:parallaxController.view];
     
     [parallaxController didMoveToParentViewController:self];
-     */
     
+    [parallaxController configWithParallaxContentView:imageView rootView:tableView parallaxHeight:200];
 }
 
 - (void)didReceiveMemoryWarning

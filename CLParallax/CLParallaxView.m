@@ -10,6 +10,10 @@
 
 @implementation CLParallaxView
 
+- (void)dealloc {
+    [_rootView removeObserver:self forKeyPath:@"contentOffset"];
+}
+
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -17,15 +21,6 @@
     }
     return self;
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 - (void)configWithParallaxContentView:(UIView *)parallaxContentView
                              rootView:(UIScrollView *)rootView
@@ -35,37 +30,45 @@
     _rootView                  = rootView;
     _parallaxHeight            = parallaxHeight;
     
-    parallaxContentView.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), _parallaxHeight);
-    NSLog(@"f:%@", NSStringFromCGRect(parallaxContentView.frame));
+    parallaxContentView.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), parallaxHeight);
     rootView.frame = self.bounds;
-    rootView.contentInset = UIEdgeInsetsMake(_parallaxHeight, 0, 0, 0);
+    rootView.contentInset = UIEdgeInsetsMake(parallaxHeight, 0, 0, 0);
     rootView.backgroundColor = [UIColor clearColor];
-    rootView.delegate = self;
     rootView.showsVerticalScrollIndicator = NO;
     
     [self addSubview:parallaxContentView];
     [self addSubview:rootView];
+    [rootView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:NULL];
+    
 }
 
 #pragma mark ========== UIScrollViewDelegate ==========
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    UIView *parallaxContentView = self.parallaxContentView;
-    
-    CGFloat y = abs(scrollView.contentOffset.y)-_parallaxHeight;
-    CGRect newFrame;
-    if (y > 0) {
-        newFrame = CGRectMake(CGRectGetMinX(parallaxContentView.frame),
-                                     CGRectGetMinY(parallaxContentView.frame),
-                                     CGRectGetWidth(parallaxContentView.frame),
-                                     _parallaxHeight+y);
-    } else {
-        newFrame = CGRectMake(CGRectGetMinX(parallaxContentView.frame),
-                                     (int)(y*0.5),
-                                     CGRectGetWidth(parallaxContentView.frame),
-                                     CGRectGetHeight(parallaxContentView.frame));
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"contentOffset"]) {
+        
+        UIView *parallaxContentView = self.parallaxContentView;
+        CGRect originParallaxFrame = parallaxContentView.frame;
+        
+        float y = _rootView.contentOffset.y + _parallaxHeight;
+        if (y > 0) {
+            CGFloat newHeight = _parallaxHeight - y;
+            [parallaxContentView setHidden:(newHeight <= 0)];
+            
+            if (!parallaxContentView.hidden) {
+                parallaxContentView.frame = CGRectMake(originParallaxFrame.origin.x,
+                                                       originParallaxFrame.origin.y,
+                                                       CGRectGetWidth(originParallaxFrame),
+                                                       newHeight);
+            }
+        } else {
+            CGFloat newHeight = _parallaxHeight - y;
+            parallaxContentView.hidden = NO;
+            parallaxContentView.frame = CGRectMake(originParallaxFrame.origin.x,
+                                                   originParallaxFrame.origin.y,
+                                                   CGRectGetWidth(originParallaxFrame),
+                                                   newHeight);
+        }
     }
-    parallaxContentView.frame = newFrame;
 }
-
 
 @end

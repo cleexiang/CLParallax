@@ -8,86 +8,58 @@
 
 #import "CLParallaxViewController.h"
 
-@interface CLParallaxViewController () <UITableViewDelegate, UIScrollViewDelegate>
+@implementation CLParallaxViewController
 
-@end
-
-@implementation CLParallaxViewController 
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        
-    }
-    return self;
+- (void)dealloc {
+    [_rootView removeObserver:self forKeyPath:@"contentOffset"];
 }
 
-- (id)initWithParallaxController:(UIViewController *)top
-                  rootController:(UITableViewController *)root
-                  parallaxHeight:(CGFloat)parallaxHeight {
-    self = [super init];
-    if (self) {
-        _parallaxContentController = top;
-        _rootController = root;
-        _parallaxHeight = parallaxHeight;
-        
-        [top willMoveToParentViewController:self];
-        [root willMoveToParentViewController:self];
-        
-        [self addChildViewController:top];
-        [self addChildViewController:root];
-        
-        top.view.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), _parallaxHeight);
-        root.view.frame = self.view.bounds;
-        root.tableView.contentInset = UIEdgeInsetsMake(_parallaxHeight, 0, 0, 0);
-        root.tableView.showsVerticalScrollIndicator = NO;
-        root.tableView.delegate = self;
-        root.view.backgroundColor = [UIColor clearColor];
-        [root.tableView setBackgroundColor:[UIColor clearColor]];
-        [root.tableView setBackgroundView:nil];
-        [self.view addSubview:top.view];
-        [self.view addSubview:root.view];
-        
-        [top didMoveToParentViewController:self];
-        [root didMoveToParentViewController:self];
-    }
-
+- (void)configWithParallaxContentView:(UIView *)parallaxContentView
+                             rootView:(UIScrollView *)rootView
+                       parallaxHeight:(CGFloat)parallaxHeight {
     
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    _parallaxContentView       = parallaxContentView;
+    _rootView                  = rootView;
+    _parallaxHeight            = parallaxHeight;
+    
+    parallaxContentView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), _parallaxHeight);
+    rootView.frame = self.view.bounds;
+    rootView.contentInset = UIEdgeInsetsMake(_parallaxHeight, 0, 0, 0);
+    rootView.backgroundColor = [UIColor clearColor];
+    rootView.showsVerticalScrollIndicator = NO;
+    
+    [self.view addSubview:parallaxContentView];
+    [self.view addSubview:rootView];
+    [rootView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 #pragma mark ========== UIScrollViewDelegate ==========
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    UITableView *tableView = self.rootController.tableView;
-    UIView *parallaxContentView = self.parallaxContentController.view;
-    
-    CGFloat y = abs(tableView.contentOffset.y)-_parallaxHeight;
-    CGRect newFrame;
-    if (y > 0) {
-        newFrame = CGRectMake(CGRectGetMinX(parallaxContentView.frame),
-                              CGRectGetMinY(parallaxContentView.frame),
-                              CGRectGetWidth(parallaxContentView.frame),
-                              _parallaxHeight+y);
-    } else {
-        newFrame = CGRectMake(CGRectGetMinX(parallaxContentView.frame),
-                              (int)(y*0.5),
-                              CGRectGetWidth(parallaxContentView.frame),
-                              CGRectGetHeight(parallaxContentView.frame));
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"contentOffset"]) {
+        
+        UIView *parallaxContentView = self.parallaxContentView;
+        CGRect originParallaxFrame = parallaxContentView.frame;
+        
+        float y = _rootView.contentOffset.y + _parallaxHeight;
+        if (y > 0) {
+            CGFloat newHeight = _parallaxHeight - y;
+            [parallaxContentView setHidden:(newHeight <= 0)];
+            
+            if (!parallaxContentView.hidden) {
+                parallaxContentView.frame = CGRectMake(originParallaxFrame.origin.x,
+                                                       originParallaxFrame.origin.y,
+                                                       CGRectGetWidth(originParallaxFrame),
+                                                       newHeight);
+            }
+        } else {
+            CGFloat newHeight = _parallaxHeight - y;
+            parallaxContentView.hidden = NO;
+            parallaxContentView.frame = CGRectMake(originParallaxFrame.origin.x,
+                                                   originParallaxFrame.origin.y,
+                                                   CGRectGetWidth(originParallaxFrame),
+                                                   newHeight);
+        }
     }
-    parallaxContentView.frame = newFrame;
 }
 
 @end

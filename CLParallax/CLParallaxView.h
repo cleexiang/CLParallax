@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CLParallaxView : UIView <UIScrollViewDelegate>
+@interface CLParallaxView : UIScrollView
 
 @property (nonatomic, strong) UIView        *parallaxContentView;
 @property (nonatomic, strong) UIScrollView  *rootView;
