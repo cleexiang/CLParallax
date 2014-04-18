@@ -8,8 +8,6 @@
 
 #import "CLViewController.h"
 #import "CLParallaxViewController.h"
-#import "RootViewController.h"
-#import "TopViewController.h"
 #import "CLParallaxView.h"
 
 @interface CLViewController () <UITableViewDataSource> {
